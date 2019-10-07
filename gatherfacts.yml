@@ -1,0 +1,14 @@
+---
+
+- name: Gather facts on BIG-IP
+  hosts: bigipa
+  connection: local
+
+  tasks:
+      - name: Gather facts
+        bigip_facts:
+          server: "{{ inventory_hostname }}"
+          user: "{{ username }}"
+          password: "{{ password }}"
+          include: interface,vlan
+        delegate_to: localhost

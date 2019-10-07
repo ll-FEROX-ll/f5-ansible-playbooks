@@ -1,0 +1,11 @@
+- name: Create license pool
+  iworkflow_license_pool:
+      accept_eula: "yes"
+      name: "my-lic-pool"
+      base_key: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXXXX"
+      state: "present"
+      server: "iwf.mydomain.com"
+      password: "secret"
+      user: "admin"
+      validate_certs: "no"
+  delegate_to: localhost

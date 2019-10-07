@@ -1,0 +1,17 @@
+---
+
+- name: Disable a single node
+  hosts: bigipa
+  connection: local
+
+  tasks:
+      - name: Disable a node
+        bigip_node:
+            validate_certs: "no"
+            server: "bigipa"
+            user: "admin"
+            password: "admin"
+            partition: "Common"
+            name: "{{ node }}"
+            state: "absent"
+        delegate_to: localhost

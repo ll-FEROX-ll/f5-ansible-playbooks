@@ -1,0 +1,55 @@
+vars:
+    policy_rules:
+        - name: rule1
+          actions:
+              - forward: "yes"
+                select: "yes"
+                pool: "pool-svrs"
+          conditions:
+              - http_uri: "yes"
+                path: "yes"
+                starts-with:
+                    - /euro
+          ordinal: 8
+        - name: HomePage
+          actions:
+              - forward: yes
+                select: yes
+                pool: "pool-svrs"
+          conditions:
+              - http-uri: yes
+                path: yes
+                starts-with:
+                    - /HomePage/
+          ordinal: 4
+
+- name: Create policies
+  bigip_policy:
+      name: "Policy-Foo"
+      state: present
+  delegate_to: localhost
+
+- name: Add a rule to the new policy
+  bigip_policy_rule:
+      policy: "Policy-Foo"
+      name: "ABC"
+      ordinal: 11
+      conditions:
+          - http_uri: "yes"
+            path: "yes"
+            starts_with:
+                - "/ABC"
+      actions:
+          - forward: "yes"
+            select: "yes"
+            pool: "pool-svrs"
+
+- name: Add multiple rules to the new policy
+  bigip_policy_rule:
+      policy: "Policy-Foo"
+      name: "{{ item.name }}"
+      ordinal: "{{ item.ordinal }}"
+      conditions: "{{ item.conditions }}"
+      actions: "{{ item.actions }}"
+  with_items:
+      - policy_rules

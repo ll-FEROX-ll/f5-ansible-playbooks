@@ -1,0 +1,24 @@
+- name: License iWorkflow with a base license
+  iworkflow_license:
+      accept_eula: "yes"
+      base_key: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXXXX"
+      state: "present"
+      server: "iwf.mydomain.com"
+      password: "secret"
+      user: "admin"
+      validate_certs: "no"
+  delegate_to: localhost
+
+- name: License iWorkflow and provide add-on keys
+  iworkflow_license:
+      accept_eula: "yes"
+      base_key: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXXXX"
+      add_on_keys:
+          - YYYYY-YYYYY-YYYYY-YYYYY-YYYYYYY
+          - ZZZZZ-ZZZZZ-ZZZZZ-ZZZZZ-ZZZZZZZ
+      state: "present"
+      server: "iwf.mydomain.com"
+      password: "secret"
+      user: "admin"
+      validate_certs: "no"
+  delegate_to: localhost

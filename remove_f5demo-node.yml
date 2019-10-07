@@ -1,0 +1,23 @@
+---
+
+- name: Remove single nodes
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+      - name: Remove nodes to the f5 demo pool
+        bigip_pool_member:
+            description: "f5demo_pool"
+            host: "{{ item.host }}"
+            name: "{{ item.name }}"
+            password: "admin"
+            pool: "f5demo_pool"
+            port: "80"
+            server: "bigipa"
+            user: "admin"
+            state: absent
+            validate_certs: "no"
+        delegate_to: localhost
+        with_items:
+            - host: "10.1.20.15"
+              name: "f5demo_node-5"

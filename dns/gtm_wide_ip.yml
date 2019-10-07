@@ -1,0 +1,16 @@
+---
+
+- name: Create wide IP
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Set lb method
+      bigip_gtm_wide_ip:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        name: "{{ wideIPname }}"
+        type: "{{ recordType }}"
+        lb_method: "{{ lbMethod }}"
+      delegate_to: localhost

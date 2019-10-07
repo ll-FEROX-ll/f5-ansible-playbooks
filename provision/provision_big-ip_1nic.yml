@@ -1,0 +1,61 @@
+---
+
+  - name: Provision a new BIG-IP
+    hosts: all
+    connection: local
+  
+    tasks:
+      - name: Disable GUI setup
+        bigip_sys_global:
+          server: "{{ inventory_hostname }}"
+          user: "{{ username }}"
+          password: "{{ password }}"
+          gui_setup: "disabled"
+          state: present
+        delegate_to: localhost
+  
+      - name: Set the hostname of the BIG-IP
+        bigip_hostname:
+          server: "{{ inventory_hostname }}"
+          user: "{{ username }}"
+          password: "{{ password }}"
+          hostname: "{{ bigip }}".lab.local
+          validate_certs: "no"
+        delegate_to: localhost
+  
+      - name: Create External VLAN
+        bigip_vlan:
+          server: "{{ inventory_hostname }}"
+          user: "{{ username }}"
+          password: "{{ password }}"
+          name: "external"
+          untagged_interfaces: "1.1"
+          validate_certs: "no"
+        delegate_to: localhost
+  
+      - name: Create External Self IP
+        bigip_selfip:
+          server: "{{ inventory_hostname }}"
+          user: "{{ username }}"
+          password: "{{ password }}"
+          name: "external"
+          vlan: "external"
+          address: "10.1.1.3"
+          netmask: "255.255.255.0"
+          allow_service: 
+            - tcp:22
+            - tcp:443
+            - tcp:8443
+          validate_certs: "no"
+        delegate_to: localhost
+  
+      - name: Provision LTM
+        bigip_provision:
+          server: "{{ inventory_hostname }}"
+          user: "{{ username }}"
+          password: "{{ password }}"
+          module: ltm
+          level: nominal
+          validate_certs: no
+        delegate_to: localhost
+  

@@ -1,0 +1,24 @@
+- name: Create LTM Nodes
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Create node-1
+      bigip_node:
+        server: "{{ bigip }}"
+        name: node-1
+        address: 10.10.10.1
+        password: "{{ password }}"
+        user: "{{ user }}"
+        validate_certs: "no"
+      delegate_to: localhost
+
+    - name: Create node-2
+      bigip_node:
+        server: "{{ bigip }}"
+        name: node-2
+        address: 10.10.10.2
+        password: "{{ password }}"
+        user: "{{ user }}"
+        validate_certs: "no"
+      delegate_to: localhost

@@ -1,0 +1,16 @@
+---
+
+- name: GTM data center creation
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Create GTM data center
+      bigip_gtm_datacenter:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        name: "{{ gtmDC }}"
+        location: "{{ location }}"
+        validate_certs: no
+      delegate_to: localhost

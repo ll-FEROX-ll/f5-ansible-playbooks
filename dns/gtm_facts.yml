@@ -1,0 +1,15 @@
+---
+
+- name: Gater GTM facts
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Get pool facts
+      bigip_gtm_facts:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        include: "{{ include }}"
+        validate_certs: no
+      delegate_to: localhost

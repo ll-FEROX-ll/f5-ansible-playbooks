@@ -1,0 +1,9 @@
+- name: Disable iWorkflow setup screen and set accounts as unchanged
+  iworkflow_system_setup:
+      is_admin_password_changed: "no"
+      is_root_password_changed: "no"
+      is_system_setup: "yes"
+      password: "secret"
+      server: "iwf.mydomain.com"
+      user: "admin"
+  delegate_to: localhost

@@ -1,0 +1,19 @@
+---
+
+- name: Add DNS view on BIG-IP DNS
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Add an A record to organization.com zone
+      bigip_dns_record:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        type: A
+        zone: organization.com
+        state: present
+        options:
+          hostname: elliot.organization.com
+          ip_address: 10.1.1.1
+      delegate_to: localhost

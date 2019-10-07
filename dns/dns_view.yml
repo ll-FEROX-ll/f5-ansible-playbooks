@@ -1,0 +1,20 @@
+---
+
+- name: Add DNS view on BIG-IP DNS
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Add a view, named "internal", to organization.com zone
+      bigip_view:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        validate_certs: no 
+        zone_names:
+          - organization.com
+        state: present
+        options:
+          - domain_name: elliot.organization.com
+            ip_address: 10.1.1.1
+      delegate_to: localhost

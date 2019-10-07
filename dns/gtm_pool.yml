@@ -1,0 +1,15 @@
+---
+
+- name: Create a GTM pool
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Create a GTM pool
+      bigip_gtm_pool:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        name: "my_pool"
+        type: "a"
+      delegate_to: localhost

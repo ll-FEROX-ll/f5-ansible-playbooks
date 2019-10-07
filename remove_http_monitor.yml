@@ -1,0 +1,16 @@
+---
+
+- name: Create a VIP, pool, pool members and nodes
+  hosts: bigipa
+  connection: local
+
+  tasks:
+      - name: BIGIP F5 | Remove HTTP Monitor
+        bigip_monitor_http:
+          state: "absent"
+          server: "bigipa"
+          user: "admin"
+          password: "admin"
+          name: "f5demo_http_monitor"
+          validate_certs: "False"
+        delegate_to: localhost

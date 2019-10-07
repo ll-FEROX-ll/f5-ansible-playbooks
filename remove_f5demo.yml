@@ -1,0 +1,84 @@
+---
+
+- name: Remove the f5 demo VIP, pool, pool members and nodes
+  hosts: bigipa
+  connection: local
+
+  tasks:
+      - name: Remove the f5 demo VIP
+        bigip_virtual_server:
+            description: "f5demo_vs"
+            destination: "10.1.10.10"
+            password: "admin"
+            name: "f5demo_vs"
+            pool: "f5demo_pool"
+            port: "80"
+            server: "bigipa"
+            snat: "Automap"
+            user: "admin"
+            all_profiles:
+                - "http"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove the f5 demo pool
+        bigip_pool:
+            name: "f5demo_pool"
+            user: "admin"
+            password: "admin"
+            server: "bigipa"
+            slow_ramp_time: "120"
+            lb_method: least-connections-node
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove f5demo_node-1
+        bigip_node:
+            name: "f5demo_node-1"
+            password: "admin"
+            server: "bigipa"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove f5demo_node-2
+        bigip_node:
+            name: "f5demo_node-2"
+            password: "admin"
+            server: "bigipa"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove f5demo_node-3
+        bigip_node:
+            name: "f5demo_node-3"
+            password: "admin"
+            server: "bigipa"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove f5demo_node-4
+        bigip_node:
+            name: "f5demo_node-4"
+            password: "admin"
+            server: "bigipa"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove f5demo_node-5
+        bigip_node:
+            name: "f5demo_node-5"
+            password: "admin"
+            server: "bigipa"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost

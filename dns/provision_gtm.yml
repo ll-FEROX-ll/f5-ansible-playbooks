@@ -1,0 +1,16 @@
+---
+
+- name: Provision GTM
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Provision GTM
+      bigip_provision:
+        server: "{{ bigip }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        module: gtm
+        level: nominal
+        validate_certs: no
+      delegate_to: localhost

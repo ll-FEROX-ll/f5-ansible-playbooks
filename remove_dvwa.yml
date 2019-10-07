@@ -1,0 +1,46 @@
+---
+
+- name: Remove the DVWA VIP, pool, pool members and nodes
+  hosts: bigipa
+  connection: local
+
+  tasks:
+      - name: Remove the DVWA VIP
+        bigip_virtual_server:
+            description: "dvwa_vs"
+            destination: "10.1.10.17"
+            password: "admin"
+            name: "dvwa_vs"
+            pool: "dvwa_pool"
+            port: "80"
+            server: "bigipa"
+            snat: "Automap"
+            user: "admin"
+            all_profiles:
+                - "http"
+                - "clientssl"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove the DVWA pool
+        bigip_pool:
+            lb_method: "ratio_member"
+            name: "dvwa_pool"
+            password: "admin"
+            server: "bigipa"
+            slow_ramp_time: "120"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost
+
+      - name: Remove the DVWA node
+        bigip_node:
+            name: "dvwa_node"
+            password: "admin"
+            server: "bigipa"
+            user: "admin"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost

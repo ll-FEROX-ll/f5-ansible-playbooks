@@ -1,0 +1,23 @@
+---
+
+- name: Remove the webtop VIP, pool, pool members and nodes
+  hosts: "{{ nodes }}"
+  connection: local
+
+  tasks:
+      - name: Remove the webtop VIP
+        bigip_virtual_server:
+            description: "webtop_vs"
+            destination: "10.1.10.99"
+            password: "admin"
+            name: "webtop_vs"
+            port: "443"
+            server: "{{ nodes }}"
+            snat: "Automap"
+            user: "admin"
+            all_profiles:
+                - "http"
+                - "clientssl"
+            validate_certs: "no"
+            state: "absent"
+        delegate_to: localhost

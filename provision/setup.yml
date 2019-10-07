@@ -1,0 +1,15 @@
+---
+
+- name: Disable BIG-IP setup wizard
+  hosts: all
+  connection: local
+
+  tasks:
+    - name: Disable GUI setup
+      bigip_sys_global:
+        server: "{{ inventory_hostname }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        gui_setup: "disabled"
+        state: present
+      delegate_to: localhost

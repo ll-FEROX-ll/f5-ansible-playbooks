@@ -1,0 +1,55 @@
+
+
+- name: Create LTM Nodes + Create Pool + Add to Pool + Create vServer
+  hosts: "{{ bigip }}"
+  connection: local
+
+  tasks:
+    - name: Create node-1
+      bigip_node:
+        server: "{{ bigip }}"
+        name: node-1
+        address: 10.10.10.1
+        password: "{{ password }}"
+        user: "{{ user }}"
+        validate_certs: "no"
+      delegate_to: localhost
+
+    - name: Create node-2
+      bigip_node:
+        server: "{{ bigip }}"
+        name: node-2
+        address: 10.10.10.2
+        password: "{{ password }}"
+        user: "{{ user }}"
+        validate_certs: "no"
+      delegate_to: localhost
+
+    - name: Create a pool
+      bigip_pool:
+        lb_method: least-connections-member
+        name: ansible-test-pool
+        password: "{{ password }}"
+        server: "{{ bigip }}"
+        slow_ramp_time: 120
+        user: "{{ user }}"
+        validate_certs: "no"
+      delegate_to: localhost
+
+    - name: Add nodes to pool
+      bigip_pool_member: 
+        description: "https-pool"
+        address: "{{ item.address }}"
+        name: "{{ item.name }}"
+        password: "{{ password }}"
+        pool: "ansible-test-pool"
+        port: 443
+        server: "{{ bigip }}"
+        user: "{{ user }}"
+        validate_certs: "no"
+      delegate_to: localhost
+      with_items:
+      - name: node-1
+        address: 10.10.10.1
+      - name: node-2
+        address: 10.10.10.2

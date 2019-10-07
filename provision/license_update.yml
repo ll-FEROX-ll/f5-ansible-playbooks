@@ -1,0 +1,16 @@
+---
+
+- name: Create a VIP, pool, pool members and nodes
+  hosts: bigipa
+  connection: local
+
+  tasks:
+      - name: License a BIG-IP
+        bigip_license:
+            server: "{{ inventory_hostname }}"
+            server_port: "{{ bigip_port }}"
+            user: "{{ username }}"
+            password: "{{ password }}"
+            key: "{{ bigip_license }}"
+            validate_certs: "{{ validate_certs }}"
+        delegate_to: localhost

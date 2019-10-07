@@ -1,0 +1,41 @@
+- name: Create node from managed device
+  iworkflow_local_connector_node:
+      device: "10.144.128.137"
+      password_credential: "secret"
+      username_credential: "admin"
+      state: "present"
+      connector: "Private OpenStack"
+      hostname: "lb1.example.com"
+      interfaces:
+          - local_address: "10.144.128.137"
+            subnet_address: "10.144.128/24"
+          - local_address: "10.2.0.81"
+            subnet_address: "10.2.0.0/24"
+            name: "internal"
+      server: "iwf.mydomain.com"
+      password: "secret"
+      user: "admin"
+      validate_certs: "no"
+  delegate_to: localhost
+
+- name: Create node from managed device in Azure
+  iworkflow_local_connector_node:
+      device: "10.144.128.137"
+      password_credential: "secret"
+      username_credential: "admin"
+      device_root_password: "default"
+      state: "present"
+      connector: "Public Azure West US"
+      hostname: "lb1.example.com"
+      interfaces:
+          - local_address: "10.0.2.12"
+            subnet_address: "10.0.2.0/24"
+            virtual_address: "10.144.128.137"
+          - local_address: "10.2.0.81"
+            subnet_address: "10.2.0.0/24"
+            name: "external"
+      server: "iwf.mydomain.com"
+      password: "secret"
+      user: "admin"
+      validate_certs: "no"
+  delegate_to: localhost

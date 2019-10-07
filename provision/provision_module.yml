@@ -1,0 +1,17 @@
+---
+
+- name: Provision a BIG-IP module
+  hosts: all
+  connection: local
+
+  tasks:
+    - name: Change "{{ state }}" state of "{{ module }}" module with level "{{ level }}"
+      bigip_provision:
+        server: "{{ inventory_hostname }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        module: "{{ module }}"
+        level: "{{ level }}"
+        state: "{{ state }}"
+        validate_certs: no
+      delegate_to: localhost

@@ -1,0 +1,14 @@
+---
+
+- name: License a BIG-IP
+  hosts: all
+  connection: local
+
+  tasks:
+    - name: License BIG-IP using a key
+      bigip_license:
+        server: "{{ inventory_hostname }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        key: "XXXXX-XXXXX-XXXXX-XXXXX-XXXXXXX"
+      delegate_to: localhost

@@ -1,0 +1,9 @@
+- name: Discover a BIG-IP device with hostname lb.mydomain.com
+  iworkflow_device:
+      device: "lb.mydomain.com
+      username_credential: "admin"
+      password_credential: "admin"
+      password: "secret"
+      server: "mgmt.mydomain.com"
+      user: "admin"
+  delegate_to: localhost
